@@ -1,4 +1,6 @@
 ﻿using CarrascoLanches.Context;
+using CarrascoLanches.Repositories;
+using CarrascoLanches.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -17,7 +19,10 @@ public class Startup
     {
         services.AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConection")));
-        
+
+        services.AddTransient<ICategoriaRepository, CategoriaRepository>();
+        services.AddTransient<ILancheRepository, LancheRepository>();
+
         services.AddControllersWithViews();
     }
 
