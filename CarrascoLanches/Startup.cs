@@ -1,4 +1,8 @@
-﻿namespace CarrascoLanches;
+﻿using CarrascoLanches.Context;
+using Microsoft.EntityFrameworkCore;
+
+
+namespace CarrascoLanches;
 public class Startup
 {
     public Startup(IConfiguration configuration)
@@ -11,6 +15,9 @@ public class Startup
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+        services.AddDbContext<AppDbContext>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("DefaultConection")));
+        
         services.AddControllersWithViews();
     }
 
