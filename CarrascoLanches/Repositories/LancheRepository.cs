@@ -9,6 +9,12 @@ namespace CarrascoLanches.Repositories
     {
 
         private readonly AppDbContext _context;
+
+        public LancheRepository(AppDbContext context)
+        {
+            _context = context;
+        }
+
         public IEnumerable<Lanche> Lanches => _context.Lanches.Include(c => c.Categoria);
 
         public IEnumerable<Lanche> LanchesPreferidos => _context.Lanches
