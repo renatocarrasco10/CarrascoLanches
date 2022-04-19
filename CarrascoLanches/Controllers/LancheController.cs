@@ -1,4 +1,5 @@
 ﻿using CarrascoLanches.Repositories.Interfaces;
+using CarrascoLanches.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarrascoLanches.Controllers
@@ -14,14 +15,18 @@ namespace CarrascoLanches.Controllers
 
         public IActionResult List()
         {
-            ViewData["Titulo"] = "Todos os Produtos";
+           
+            var lanchesListViewModel = new LancheListViewModel();
+            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
+            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
 
-            var lanches = _lancheRepository.Lanches;
-            int TotalLanches = lanches.Count();
+            int TotalLanches = lanchesListViewModel.Lanches.Count();
             ViewBag.Total = "Total de Lanches: ";
             ViewBag.TotalLanches = TotalLanches;
 
-            return View(lanches);
+            return View(lanchesListViewModel);
+
+            
         }
     }
 }
