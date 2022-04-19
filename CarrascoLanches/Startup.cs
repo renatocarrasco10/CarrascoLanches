@@ -23,6 +23,9 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<ILancheRepository, LancheRepository>();
 
+        services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+
         services.AddControllersWithViews();
 
         services.AddMemoryCache();
@@ -45,6 +48,7 @@ public class Startup
         }
         app.UseHttpsRedirection();
         app.UseStaticFiles();
+
 
         app.UseRouting();
         app.UseSession();
