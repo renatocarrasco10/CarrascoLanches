@@ -1,4 +1,5 @@
 ﻿using CarrascoLanches.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarrascoLanches.Models
 {
@@ -63,7 +64,7 @@ namespace CarrascoLanches.Models
             var carrinhoCompraItem = _Context.CarrinhoCompraItems.SingleOrDefault(
                 s => s.Lanche.LancheId == lanche.LancheId &&
                 s.CarrinhoCompraId == CarrinhoCompraId);
-            
+
             var quantidadeLocal = 0;
 
             if (carrinhoCompraItem != null)
@@ -80,6 +81,33 @@ namespace CarrascoLanches.Models
             }
             _Context.SaveChanges();
             return quantidadeLocal;
+        }
+
+        public List<CarrinhoCompraItem> GetCarrinhoCompraItems()
+        {
+            return CarrinhoCompraItems ??
+                _Context.CarrinhoCompraItems
+                .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
+                .Include(s => s.Lanche)
+                .ToList();
+        }
+
+        public void LimparCarrinho()
+        {
+            var carrinhoItems = _Context.CarrinhoCompraItems
+                                .Where(c => c.CarrinhoCompraId == CarrinhoCompraId);
+
+            _Context.RemoveRange(carrinhoItems);
+            _Context.SaveChanges();
+        }
+
+        public double GetCarrinhoCompraTotal()
+        {
+            var total = _Context.CarrinhoCompraItems
+                        .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
+                        .Select(c => c.Quantidade * c.Lanche.Preco).Sum();
+
+            return total;
         }
     }
 }
