@@ -40,6 +40,7 @@ namespace CarrascoLanches.Models
             var carrinhoCompraItem = _Context.CarrinhoCompraItems.SingleOrDefault(
                 s => s.Lanche.LancheId == lanche.LancheId &&
                 s.CarrinhoCompraId == CarrinhoCompraId);
+
             if (carrinhoCompraItem == null)
             {
                 carrinhoCompraItem = new CarrinhoCompraItem
@@ -55,6 +56,30 @@ namespace CarrascoLanches.Models
                 carrinhoCompraItem.Quantidade++;
             }
             _Context.SaveChanges();
+        }
+
+        public int RemoverDoCarrinho(Lanche lanche)
+        {
+            var carrinhoCompraItem = _Context.CarrinhoCompraItems.SingleOrDefault(
+                s => s.Lanche.LancheId == lanche.LancheId &&
+                s.CarrinhoCompraId == CarrinhoCompraId);
+            
+            var quantidadeLocal = 0;
+
+            if (carrinhoCompraItem != null)
+            {
+                if (carrinhoCompraItem.Quantidade > 1)
+                {
+                    carrinhoCompraItem.Quantidade--;
+                    quantidadeLocal = carrinhoCompraItem.Quantidade;
+                }
+                else
+                {
+                    _Context.CarrinhoCompraItems.Remove(carrinhoCompraItem);
+                }
+            }
+            _Context.SaveChanges();
+            return quantidadeLocal;
         }
     }
 }
