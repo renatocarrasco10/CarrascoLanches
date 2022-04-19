@@ -23,7 +23,7 @@ namespace CarrascoLanches.Models
             var context = services.GetService<AppDbContext>();
 
             //obtem ou gera o Id do carrinho
-            string carrinhoId =session.GetString("CarrinhoCompraId") ?? Guid.NewGuid().ToString();
+            string carrinhoId = session.GetString("CarrinhoCompraId") ?? Guid.NewGuid().ToString();
 
             //atribui o id do carrinho na Sessão
             session.SetString("CarrinhoCompraId", carrinhoId);
@@ -33,6 +33,28 @@ namespace CarrascoLanches.Models
             {
                 CarrinhoCompraId = carrinhoId
             };
+        }
+
+        public void AdicionarAoCarrinho(Lanche lanche)
+        {
+            var carrinhoCompraItem = _Context.CarrinhoCompraItems.SingleOrDefault(
+                s => s.Lanche.LancheId == lanche.LancheId &&
+                s.CarrinhoCompraId == CarrinhoCompraId);
+            if (carrinhoCompraItem == null)
+            {
+                carrinhoCompraItem = new CarrinhoCompraItem
+                {
+                    CarrinhoCompraId = CarrinhoCompraId,
+                    Lanche = lanche,
+                    Quantidade = 1
+                };
+                _Context.CarrinhoCompraItems.Add(carrinhoCompraItem);
+            }
+            else
+            {
+                carrinhoCompraItem.Quantidade++;
+            }
+            _Context.SaveChanges();
         }
     }
 }
