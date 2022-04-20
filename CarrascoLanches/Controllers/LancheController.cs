@@ -25,19 +25,10 @@ namespace CarrascoLanches.Controllers
             }
             else
             {
-                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
-                {
                     lanches = _lancheRepository.Lanches
-                                .Where(l => l.Categoria.CategoriaNome.Equals("Normal", StringComparison.OrdinalIgnoreCase))
+                                .Where(l => l.Categoria.CategoriaNome.Equals(categoria, StringComparison.OrdinalIgnoreCase))
                                 .OrderBy(l => l.Nome);
-                }
-                else 
-                {
-                    lanches = _lancheRepository.Lanches
-                                .Where(l => l.Categoria.CategoriaNome.Equals("Natural", StringComparison.OrdinalIgnoreCase))
-                                .OrderBy(l => l.Nome);
-                    
-                }
+               
                 categoriaAtual = categoria;
             }
 
