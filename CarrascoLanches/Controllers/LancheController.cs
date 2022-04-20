@@ -20,7 +20,7 @@ namespace CarrascoLanches.Controllers
             string categoriaAtual = string.Empty;
             if (string.IsNullOrEmpty(categoria))
             {
-                lanches = _lancheRepository.Lanches.OrderBy(l => l.Nome).OrderBy(l => l.Categoria);
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.Nome);
                 categoriaAtual = "Todos os Lanches";
             }
             else
