@@ -1,4 +1,5 @@
 ﻿using CarrascoLanches.Context;
+using CarrascoLanches.Models;
 using CarrascoLanches.Repositories;
 using CarrascoLanches.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ public class Startup
 
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<ILancheRepository, LancheRepository>();
+        services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

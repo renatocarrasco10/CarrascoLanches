@@ -101,13 +101,13 @@ namespace CarrascoLanches.Models
             _Context.SaveChanges();
         }
 
-        public double GetCarrinhoCompraTotal()
+        public decimal GetCarrinhoCompraTotal()
         {
             var total = _Context.CarrinhoCompraItems
                         .Where(c => c.CarrinhoCompraId == CarrinhoCompraId)
-                        .Select(c => c.Quantidade * c.Lanche.Preco).Sum();
+                        .Select(c => c.Lanche.Preco * c.Quantidade ).Sum();
 
-            return total;
+            return (decimal)total;
         }
     }
 }
