@@ -1,4 +1,5 @@
-﻿using CarrascoLanches.Repositories.Interfaces;
+﻿using CarrascoLanches.Models;
+using CarrascoLanches.Repositories.Interfaces;
 using CarrascoLanches.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +14,36 @@ namespace CarrascoLanches.Controllers
             _lancheRepository = lancheRepository;
         }
 
-        public IActionResult List()
+        public IActionResult List(string categoria)
         {
-           
+            IEnumerable<Lanche> lanches;
+            string categoriaAtual = string.Empty;
+            if (string.IsNullOrEmpty(categoria))
+            {
+                lanches = _lancheRepository.Lanches.OrderBy(l => l.Nome).OrderBy(l => l.Categoria);
+                categoriaAtual = "Todos os Lanches";
+            }
+            else
+            {
+                if (string.Equals("Normal", categoria, StringComparison.OrdinalIgnoreCase))
+                {
+                    lanches = _lancheRepository.Lanches
+                                .Where(l => l.Categoria.CategoriaNome.Equals("Normal", StringComparison.OrdinalIgnoreCase))
+                                .OrderBy(l => l.Nome);
+                }
+                else 
+                {
+                    lanches = _lancheRepository.Lanches
+                                .Where(l => l.Categoria.CategoriaNome.Equals("Natural", StringComparison.OrdinalIgnoreCase))
+                                .OrderBy(l => l.Nome);
+                    
+                }
+                categoriaAtual = categoria;
+            }
+
             var lanchesListViewModel = new LancheListViewModel();
-            lanchesListViewModel.Lanches = _lancheRepository.Lanches;
-            lanchesListViewModel.CategoriaAtual = "Categoria Atual";
+            lanchesListViewModel.Lanches = lanches;
+            lanchesListViewModel.CategoriaAtual = categoriaAtual;
 
             int TotalLanches = lanchesListViewModel.Lanches.Count();
             ViewBag.Total = "Total de Lanches: ";
@@ -26,7 +51,7 @@ namespace CarrascoLanches.Controllers
 
             return View(lanchesListViewModel);
 
-            
+
         }
     }
 }
