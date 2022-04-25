@@ -24,7 +24,7 @@ namespace CarrascoLanches.Models
         [Display(Name = "Preço")]
         [Column(TypeName = "decimal(10,2)")]
         [Range(1, 999.99, ErrorMessage = "O {0} deve estar entre {1} e {2}")]
-        public double Preco { get; set; }
+        public decimal Preco { get; set; }
         [Display(Name = "Caminho Imagem Normal")]
         [StringLength(200, ErrorMessage = "O {0} deve ter no máximo {1} caracteres")]
         public string ImagemUrl { get; set; }
