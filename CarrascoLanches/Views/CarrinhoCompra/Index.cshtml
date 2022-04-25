@@ -26,9 +26,9 @@
                         <td class="text-right">@item.Lanche.Preco.ToString("c")</td>
                         <td class="text-right">@((item.Quantidade * item.Lanche.Preco).ToString("c"))</td>
                         <td class="text-center">
-                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemDoCarrinhoCompra"
+                            <a asp-controller="CarrinhoCompra" asp-action="RemoverItemNoCarrinhoCompra"
                            asp-route-lancheId="@item.Lanche.LancheId">
-                                <img src="~/images/remove.ico" />
+                                <img src="~/images/remove.ico" width="30px" height="30px"/>
                             </a>
                         </td>
                     </tr>

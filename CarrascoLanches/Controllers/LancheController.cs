@@ -44,5 +44,12 @@ namespace CarrascoLanches.Controllers
 
 
         }
+
+        public IActionResult Details(int lancheId)
+        {
+            var lanches = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
+
+            return View(lanches);
+        }
     }
 }
