@@ -2,6 +2,7 @@
 using CarrascoLanches.Models;
 using CarrascoLanches.Repositories;
 using CarrascoLanches.Repositories.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -20,6 +21,10 @@ public class Startup
     {
         services.AddDbContext<AppDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("DefaultConection")));
+
+        services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
 
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<ILancheRepository, LancheRepository>();
@@ -50,12 +55,13 @@ public class Startup
             app.UseHsts();
         }
         app.UseHttpsRedirection();
+
         app.UseStaticFiles();
-
-
         app.UseRouting();
+
         app.UseSession();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
@@ -63,7 +69,7 @@ public class Startup
             endpoints.MapControllerRoute(
                 name: "categoriaFiltro",
                 pattern: "Lanche/{action}/{categoria?}",
-                defaults: new { Controller = "Lanche", action = "List"});
+                defaults: new { Controller = "Lanche", action = "List" });
 
             endpoints.MapControllerRoute(
                 name: "default",
