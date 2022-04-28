@@ -2,6 +2,7 @@
 using CarrascoLanches.Repositories.Interfaces;
 using CarrascoLanches.Models;
 using CarrascoLanches.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CarrascoLanches.Controllers
 {
@@ -30,6 +31,7 @@ namespace CarrascoLanches.Controllers
             return View(carrinhoCompraVM);
         }
 
+        [Authorize]
         public IActionResult AdicionarItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);
@@ -40,6 +42,7 @@ namespace CarrascoLanches.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize]
         public IActionResult RemoverItemNoCarrinhoCompra(int lancheId)
         {
             var lancheSelecionado = _lancheRepository.Lanches.FirstOrDefault(l => l.LancheId == lancheId);

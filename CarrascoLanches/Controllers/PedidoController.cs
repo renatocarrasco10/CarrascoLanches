@@ -1,5 +1,6 @@
 ﻿using CarrascoLanches.Models;
 using CarrascoLanches.Repositories.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarrascoLanches.Controllers
@@ -15,13 +16,14 @@ namespace CarrascoLanches.Controllers
             _carrinhoCompra = carrinhoCompra;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult Checkout()
         {
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         public IActionResult Checkout(Pedido pedido)
         {
