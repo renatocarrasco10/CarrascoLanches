@@ -35,7 +35,7 @@ public class Startup
             options.Password.RequiredLength = 4; //default = 6
             options.Password.RequiredUniqueChars = 1; //default = 1
         }
-        ) ;
+        );
 
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<ILancheRepository, LancheRepository>();
@@ -77,6 +77,11 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
+
+            endpoints.MapControllerRoute(
+              name: "areas",
+              pattern: "{area:exists}/{controller=Admin}/{action=Index}/{id?}");
+
             endpoints.MapControllerRoute(
                 name: "categoriaFiltro",
                 pattern: "Lanche/{action}/{categoria?}",
