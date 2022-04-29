@@ -64,7 +64,9 @@ namespace CarrascoLanches.Controllers
 
                 if (result.Succeeded)
                 {
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
+
+                    await _userManager.AddToRoleAsync(user, "Member");
+                    //await _signInManager.SignInAsync(user, isPersistent: false); //logar automatico
                     return RedirectToAction("Login", "Account");
                 }
                 else

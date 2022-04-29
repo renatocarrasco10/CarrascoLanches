@@ -2,6 +2,7 @@
 using CarrascoLanches.Models;
 using CarrascoLanches.Repositories;
 using CarrascoLanches.Repositories.Interfaces;
+using CarrascoLanches.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,6 +41,16 @@ public class Startup
         services.AddTransient<ICategoriaRepository, CategoriaRepository>();
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
+        services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+
+        services.AddAuthorization(options =>
+        {
+            options.AddPolicy("Admin", politica =>
+            {
+                politica.RequireRole("Admin");
+            });
+        });
+
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -53,7 +64,7 @@ public class Startup
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISeedUserRoleInitial seedUserRoleInitial)
     {
         if (env.IsDevelopment())
         {
@@ -69,6 +80,11 @@ public class Startup
 
         app.UseStaticFiles();
         app.UseRouting();
+
+        //cria os perfis
+        seedUserRoleInitial.SeedRoles();
+        //cria os usuários e atribui ao perfil
+        seedUserRoleInitial.SeedUsers();
 
         app.UseSession();
 
