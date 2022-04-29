@@ -84,5 +84,10 @@ namespace CarrascoLanches.Controllers
 
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

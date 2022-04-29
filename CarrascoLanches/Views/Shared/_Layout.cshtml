@@ -32,6 +32,10 @@
                       </div>
                     </form>
                     @await Html.PartialAsync("_LoginPartial")
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="nav-link text-light" asp-area="Adimin" asp-controller="Admin" asp-action="Index">Admin</a>
+                    }
                 </div>
             </div>
         </nav>
