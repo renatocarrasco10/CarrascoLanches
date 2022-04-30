@@ -5,7 +5,7 @@ using CarrascoLanches.Repositories.Interfaces;
 using CarrascoLanches.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+using ReflectionIT.Mvc.Paging;
 
 namespace CarrascoLanches;
 public class Startup
@@ -58,9 +58,20 @@ public class Startup
 
         services.AddControllersWithViews();
 
+        services.AddPaging(options =>
+        {
+            options.ViewName = "Bootstrap4";
+            options.PageParameterName = "pageindex";
+        });
+
         services.AddMemoryCache();
         services.AddSession();
-
+        //options =>
+        //    {
+        //        options.IOTimeout = TimeSpan.FromSeconds(10);
+        //        options.Cookie.HttpOnly = true;
+        //        options.Cookie.IsEssential = true;
+        //});
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
