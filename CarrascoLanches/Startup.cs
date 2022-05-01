@@ -1,4 +1,5 @@
-﻿using CarrascoLanches.Context;
+﻿using CarrascoLanches.Areas.Admin.Services;
+using CarrascoLanches.Context;
 using CarrascoLanches.Models;
 using CarrascoLanches.Repositories;
 using CarrascoLanches.Repositories.Interfaces;
@@ -42,6 +43,7 @@ public class Startup
         services.AddTransient<ILancheRepository, LancheRepository>();
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
+        services.AddScoped<RelatorioVendasService>();
 
         services.AddAuthorization(options =>
         {
