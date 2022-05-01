@@ -23,7 +23,7 @@ namespace CarrascoLanches.Areas.Admin.Controllers
             _context = context;
         }
 
-        // GET: Admin/AdminPedidos
+        //// GET: Admin/AdminPedidos
         //public async Task<IActionResult> Index()
         //{
         //    return View(await _context.Pedidos.ToListAsync());
