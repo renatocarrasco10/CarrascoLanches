@@ -44,6 +44,7 @@ public class Startup
         services.AddTransient<IPedidoRepository, PedidoRepository>();
         services.AddScoped<ISeedUserRoleInitial, SeedUserRoleInitial>();
         services.AddScoped<RelatorioVendasService>();
+        services.AddScoped<GraficoVendasService>();
 
         services.AddAuthorization(options =>
         {
@@ -56,7 +57,7 @@ public class Startup
         services.AddScoped(sp => CarrinhoCompra.GetCarrinho(sp));
 
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-
+        services.Configure<ConfigurationImagens>(Configuration.GetSection("ConfigurationPastaImagens"));
 
         services.AddControllersWithViews();
 
